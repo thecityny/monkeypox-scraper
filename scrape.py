@@ -20,18 +20,14 @@ main=content.find("div", {"id":"content"})
 
 main_text=main.find(class_='box').text.strip()
 
-try: 
-    reporting_date=re.search('As of\s+\w+\s+\d+,\s+\d{4}', main_text)[0]
-    df=pd.DataFrame(re.findall('\d+\s+\w+\s+\w+', main_text), columns={'cases'})
-    df['case_count']=df.cases.str.extract(r'(\w+)').astype(int)
-    df['region']=df.cases.str.extract(r'(\w+)$')
-    df['region']=df.region.str.replace("New",'NYC')
-    df['reporting_date']=re.search('As of\s+\w+\s+\d+,\s+\d{4}', main_text)[0]
-    df['reporting_date']=df.reporting_date.str.replace("As of ","")
-    df=df[['reporting_date', 'region', 'case_count', 'cases']]
-
-except:
-    pass
+reporting_date=re.search('As of\s+\w+\s+\d+,\s+\d{4}', main_text)[0]
+df=pd.DataFrame(re.findall('\d+\s+\w+\s+\w+', main_text), columns={'cases'})
+df['case_count']=df.cases.str.extract(r'(\w+)').astype(int)
+df['region']=df.cases.str.extract(r'(\w+)$')
+df['region']=df.region.str.replace("New",'NYC')
+df['reporting_date']=re.search('As of\s+\w+\s+\d+,\s+\d{4}', main_text)[0]
+df['reporting_date']=df.reporting_date.str.replace("As of ","")
+df=df[['reporting_date', 'region', 'case_count', 'cases']]
 
 df.to_csv(f'data/monkeypox_cases_{reporting_date}.csv', index=False)
 
