@@ -14,19 +14,18 @@ from bs4 import BeautifulSoup
 
 url='https://health.ny.gov/diseases/communicable/zoonoses/monkeypox/'
 response=requests.get(url)
-content=BeautifulSoup(response.content)
+content=BeautifulSoup(response.content, 'html.parser')
 
 main=content.find("div", {"id":"content"})
 
 main_text=main.find(class_='box').text.strip()
-
 
 df=pd.DataFrame(re.findall('\d+\s+\w+\s+\w+', main_text), columns={'cases'})
 df['case_count']=df.cases.str.extract(r'(\w+)').astype(int)
 df['region']=df.cases.str.extract(r'(\w+)$')
 df['region']=df.region.str.replace("New",'NYC')
 
-reporting_date=re.search('As of .* 2022', main_text)[0]
+reporting_date=re.findall('As of .* 2022', main_text)[0]
 df['reporting_date']=reporting_date
 
 df['reporting_date']=df.reporting_date.str.replace("As of ","")
