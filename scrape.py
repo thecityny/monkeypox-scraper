@@ -20,14 +20,34 @@ main=content.find("div", {"id":"content"})
 
 main_text=main.find(class_='box').text.strip()
 
-reporting_date=re.search('As of\s+\w+\s+\d+,\s+\d{4}', main_text)[0]
+
 df=pd.DataFrame(re.findall('\d+\s+\w+\s+\w+', main_text), columns={'cases'})
 df['case_count']=df.cases.str.extract(r'(\w+)').astype(int)
 df['region']=df.cases.str.extract(r'(\w+)$')
 df['region']=df.region.str.replace("New",'NYC')
-df['reporting_date']=re.search('As of\s+\w+\s+\d+,\s+\d{4}', main_text)[0]
-df['reporting_date']=df.reporting_date.str.replace("As of ","")
-df=df[['reporting_date', 'region', 'case_count', 'cases']]
 
-df.to_csv(f'data/monkeypox_cases_{reporting_date}.csv', index=False)
+reporting_date=re.search('As of .* 2022', main_text)[0]
+df['reporting_date']=reporting_date
+
+df['reporting_date']=df.reporting_date.str.replace("As of ","")
+df=df[['reporting_date', 'region', 'case_count', 'cases']]  
+
+df.to_csv(f'data/monkeypox_{reporting_date}.csv', index=False)
+
+all_data=pd.read_csv('data/all-data.csv')
+merged_df=pd.concat([all_data, df], ignore_index=True).drop_duplicates()
+merged_df.to_csv('data/all-data.csv', index=False)
+
+
+# In[2]:
+
+
+# pd.concat([pd.read_csv('data/july6.csv'),pd.read_csv('data/july7.csv')], ignore_index=True).to_csv(
+#     'data/all-data.csv', index=False)
+
+
+# In[ ]:
+
+
+
 
