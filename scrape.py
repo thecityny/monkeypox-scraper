@@ -29,13 +29,21 @@ reporting_date=re.findall('As of .* 2022', main_text)[0]
 df['reporting_date']=reporting_date
 
 df['reporting_date']=df.reporting_date.str.replace("As of ","")
-df=df[['reporting_date', 'region', 'case_count', 'cases']]  
+df=df[['reporting_date', 'region', 'case_count', 'cases']]
+df['timestamp']=pd.to_datetime(df['reporting_date'])
 
-df.to_csv(f'data/monkeypox_{reporting_date}.csv', index=False)
 
-all_data=pd.read_csv('data/all-data.csv')
+df.to_json(f'data/monkeypox_{reporting_date}.json', orient='records')
+
+all_data=pd.read_json('data/all-data.json')
 merged_df=pd.concat([all_data, df], ignore_index=True).drop_duplicates()
-merged_df.to_csv('data/all-data.csv', index=False)
+
+merged_df['timestamp']=pd.to_datetime(merged_df['reporting_date'])
+
+
+# merged_df.to_csv('data/all-data.csv', index=False)
+merged_df.to_json('data/all-data.json', orient='records')
+
 
 
 # In[2]:
