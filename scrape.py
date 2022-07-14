@@ -4,7 +4,7 @@
 # text structure: As of July 6, 2022, a total of 128 confirmed orthopoxvirus/monkeypox cases-a designation established by the Centers for Disease Control and Prevention (CDC)-have been identified with 119 in New York City, 5 in Westchester County, 
 # 1 in Sullivan County, 1 in Chemung County, 1 in Rockland County and 1 in Suffolk County.
 
-# In[1]:
+# In[4]:
 
 
 import pandas as pd
@@ -41,7 +41,7 @@ merged_df=pd.concat([all_data, df], ignore_index=True).drop_duplicates()
 merged_df['timestamp']=pd.to_datetime(merged_df['reporting_date'])
 
 
-# merged_df.to_csv('data/all-data.csv', index=False)
+merged_df.to_csv('data/all-data.csv', index=False)
 merged_df.to_json('data/all-data.json', orient='records')
 
 
