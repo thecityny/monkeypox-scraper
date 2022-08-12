@@ -412,3 +412,27 @@ timestamp,region,case_count
 2022-08-11,Westchester,52
 2022-08-11,NYC,2039
 2022-08-11,Total,2187
+2022-08-12,Albany,2
+2022-08-12,Broome,1
+2022-08-12,Chemung,1
+2022-08-12,Columbia,2
+2022-08-12,Dutchess,7
+2022-08-12,Erie,7
+2022-08-12,Greene,1
+2022-08-12,Monroe,7
+2022-08-12,Nassau,20
+2022-08-12,Niagara,1
+2022-08-12,Onondaga,1
+2022-08-12,Orange,8
+2022-08-12,Putnam,1
+2022-08-12,Rockland,4
+2022-08-12,Schenectady,1
+2022-08-12,St. Lawrence,1
+2022-08-12,Suffolk,33
+2022-08-12,Sullivan,2
+2022-08-12,Tioga,1
+2022-08-12,Tompkins,3
+2022-08-12,Ulster,2
+2022-08-12,Westchester,59
+2022-08-12,NYC,2130
+2022-08-12,Total,2295
